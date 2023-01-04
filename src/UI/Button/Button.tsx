@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import './Button.csx';
+import './Button.css';
 
 
 interface Props extends PropsWithChildren{

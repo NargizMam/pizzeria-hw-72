@@ -1,0 +1,11 @@
+.dishes-page {
+  &__top{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}

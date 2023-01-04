@@ -1,5 +1,5 @@
 import React from 'react';
-import './Spiner.csx';
+import './Spiner.css';
 
 const Spinner = () => {
   return <div className="Spinner">Loading ...</div>

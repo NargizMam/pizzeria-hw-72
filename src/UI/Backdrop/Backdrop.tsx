@@ -1,5 +1,5 @@
 import React from 'react';
-import './Backdrop.csx';
+import './Backdrop.css';
 
 interface Props {
   show: boolean,

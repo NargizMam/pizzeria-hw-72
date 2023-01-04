@@ -1,10 +1,12 @@
 import React from 'react';
-import './Layout.csx';
+import './Layout.css';
+import Toolbar from "../../components/Toolbar/Toolbar";
 
 const Layout: React.FC<React.PropsWithChildren> = ({children}) => {
   return (
     <>
-      <main className="Content-Layout">{children}</main>
+        <Toolbar/>
+        <main className="Content-Layout">{children}</main>
     </>
   );
 };
