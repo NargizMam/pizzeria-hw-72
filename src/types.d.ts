@@ -1,7 +1,6 @@
 export interface Dish {
     id: string;
     name: string;
-    description: string;
     image: string;
     price: number;
 }
@@ -14,9 +13,8 @@ export interface ApiDishesList {
 
 export interface DishMutation {
     name: string;
-    description: string;
     image: string;
-    price: string;
+    price: number;
 }
 
 export interface CartDish {

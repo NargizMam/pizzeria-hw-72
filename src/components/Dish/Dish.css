@@ -1,0 +1,16 @@
+.Image {
+    border-radius: 10px;
+    max-height: 150px;
+    margin: 10px;
+}
+.Dish {
+    border: 5px solid #282c34;
+    border-radius: 5px;
+    box-shadow: 5px 3px #40a4c8;
+    padding: 10px;
+    max-height: 350px;
+    justify-content: space-between;
+    margin: 10px;
+    width: 300px;
+    text-align: center;
+}

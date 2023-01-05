@@ -1,0 +1,33 @@
+.AddNewDish{
+    margin: 20px auto;
+    width: 80%;
+    text-align: center;
+    box-shadow: 0 2px 3px #40a4c8;
+    border: 1px solid #282c34;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.Input {
+    outline: none;
+    border: 1px solid #40a4c8;
+    background-color: white;
+    font: inherit;
+    padding: 6px 10px;
+    margin: 10px auto;
+    display: block;
+    width: 80%;
+    box-sizing: border-box;
+}
+
+.Input:focus {
+    outline: none;
+    background-color: #ccc;
+}
+
+
+@media (min-width: 500px) {
+    .AddNewDish {
+        width: 400px;
+    }
+}

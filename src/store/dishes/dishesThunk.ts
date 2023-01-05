@@ -35,7 +35,7 @@ export const createDish = createAsyncThunk<void, ApiDish>(
 export const fetchOneDish = createAsyncThunk<ApiDish, string>(
     'dishes/fetchOne',
     async (id) => {
-        const response = await axiosApi.get<ApiDish>('.dishes'+ id +'.json');
+        const response = await axiosApi.get<ApiDish>('/dishes/'+ id +'.json');
         const dish = response.data;
         if(dish === null){
             throw  new Error('Not found');
@@ -50,7 +50,7 @@ interface UpdateDishParams {
 export const updateDish = createAsyncThunk<void, UpdateDishParams>(
     'dishes/update',
     async (params)=> {
-        await axiosApi.put('dishes' + params.id + '.json' , params.dish);
+        await axiosApi.put('/dishes/' + params.id + '.json' , params.dish);
     }
 
 )
