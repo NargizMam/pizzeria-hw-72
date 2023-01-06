@@ -1,6 +1,8 @@
 import {CartDish, Dish} from "../types";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../app/store";
+import cartDishes from "../components/CartDishes/CartDishes";
+import dishes from "../containers/Dishes/Dishes";
 
 interface CartState {
   cartDishes: CartDish[];
@@ -11,7 +13,10 @@ const initialState: CartState = {
   cartDishes: [],
   totalPrice: 0,
 }
-
+interface DishDelete {
+  id: string,
+  price: number
+}
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -33,6 +38,15 @@ export const cartSlice = createSlice({
     resetCart: (state) => {
       state.cartDishes = [];
     },
+    deleteDishFromCart: (state, {payload}: PayloadAction<DishDelete>) =>{
+        const existingDish = state.cartDishes.find(dish => dish.dish.id === payload.id);
+        if(existingDish && existingDish.amount >1 ){
+          existingDish.amount -=  1;
+        }else{
+          state.cartDishes = state.cartDishes.filter(dish => dish.dish.id === payload.id)
+        }
+        state.totalPrice = state.totalPrice - payload.price;
+    },
     updateDishes: (state, {payload: dishes}: PayloadAction<Dish[]>) => {
       const newCartDishes: CartDish[] = [];
 
@@ -53,6 +67,6 @@ export const cartSlice = createSlice({
 });
 
 export const cartReducer = cartSlice.reducer;
-export const {addDish, resetCart, updateDishes, getTotalPrice} = cartSlice.actions;
+export const {addDish, resetCart, updateDishes, getTotalPrice, deleteDishFromCart} = cartSlice.actions;
 export const selectCartDishes = (state: RootState) => state.carts.cartDishes;
 export const selectTotalPrice = (state: RootState) => state.carts.totalPrice;

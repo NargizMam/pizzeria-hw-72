@@ -6,7 +6,7 @@ import Layout from "./UI/Layout/Layout";
 import NewDish from "./containers/NewDish/NewDish";
 import EditDish from "./containers/EditDish/EditDish";
 import Orders from "./containers/Orders/Orders";
-import Cart from "./components/Cart/Cart";
+import Cart from "./components/CartDishes/CartDishes";
 
 
 function App() {
