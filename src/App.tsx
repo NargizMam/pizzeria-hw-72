@@ -5,6 +5,8 @@ import AdminPage from "./containers/AdminPage/AdminPage";
 import Layout from "./UI/Layout/Layout";
 import NewDish from "./containers/NewDish/NewDish";
 import EditDish from "./containers/EditDish/EditDish";
+import Orders from "./containers/Orders/Orders";
+import Cart from "./components/Cart/Cart";
 
 
 function App() {
@@ -16,6 +18,9 @@ function App() {
             <Route path='/admin/dishes' element={<AdminPage/>}/>
             <Route path='admin/new-dish' element={<NewDish/>}/>
             <Route path='/edit-dish/:id' element={<EditDish/>}/>
+            <Route path='admin/orders' element={<Orders/>}/>
+            <Route path='/cart-dishes' element={<Cart/>}/>
+
         </Routes>
     </Layout>
   );

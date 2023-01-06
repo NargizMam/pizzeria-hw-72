@@ -1,22 +1,23 @@
 import React, {useEffect} from 'react';
 import {Box, Container, Typography} from "@mui/material";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {selectDishes} from "../../store/dishes/dishesSlice";
+import {selectDishes, selectDishesFetchLoading} from "../../store/dishes/dishesSlice";
 import {fetchDishes} from "../../store/dishes/dishesThunk";
-import Dish from "../../components/Dish/Dish";
 import './Dishes.scss';
 import Button from "../../UI/Button/Button";
+import DishItem from "../../components/DishItem/DishItem";
+import {selectTotalPrice} from "../../store/cartSlice";
+import Spinner from "../../UI/Spinner/Spinner";
 
 interface Props{
     isAdmin: boolean;
 }
 const Dishes: React.FC<Props> = ({isAdmin}) => {
-    const dishes = useAppSelector(selectDishes);
     const dispatch = useAppDispatch();
-    const total = cartDishes.reduce((sum, cartDish) => {
-        return sum + cartDish.amount * cartDish.dish.price;
-    }, 0);
+    const dishes = useAppSelector(selectDishes);
+    const totalPrice = useAppSelector(selectTotalPrice);
+    const dishesLoading = useAppSelector(selectDishesFetchLoading);
 
 
     useEffect(() => {
@@ -24,9 +25,10 @@ const Dishes: React.FC<Props> = ({isAdmin}) => {
     }, [dispatch]);
 
 
-
     return (
-        <Container maxWidth={"xl"}>
+        <>
+        {dishesLoading ? <Spinner/> : null}
+            <Container maxWidth={"xl"}>
             <Box className="dishes-page">
                 {isAdmin &&
                 <Box className="dishes-page__top">
@@ -40,28 +42,32 @@ const Dishes: React.FC<Props> = ({isAdmin}) => {
             <Box className="dishes-page__content">
                 {dishes.length > 0 ?
                     dishes.map(dish => (
-                    <Dish key={dish.id}
-                          name={dish.name}
-                          image={dish.image}
-                          id={dish.id}
-                          price={dish.price}
+                    <DishItem key={dish.id}
+                          dish={dish}
                           isAdmin={isAdmin}
                     /> )) : <h4>Список блюд пуст!</h4>
                 }
-                {!isAdmin ?
-                    <div className="card border-0 p-2">
-                        <div className="row">
-                            <div className="col text-right">
-                                Total:
-                            </div>
-                            <div className="col-3 text-right">
-                                <strong>{total}</strong> KGS
+                {totalPrice > 0 &&
+                    <div className="container">
+                        <hr/>
+                        <div className="col border-0 p-2 text-center">
+                            <div className="row">
+                                <div className="col text-right">
+                                    Total:
+                                </div>
+                                <div className="col-3 text-right">
+                                    <strong>{totalPrice}</strong> KGS
+                                </div>
+                                <Button classes={'grey'}>
+                                    <NavLink to='/cart-dishes' style={{width: '100%'}}>Checkout</NavLink>
+                                </Button>
                             </div>
                         </div>
                     </div>
                 }
             </Box>
         </Container>
+        </>
     );
 };
 

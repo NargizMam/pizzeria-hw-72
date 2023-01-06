@@ -7,8 +7,8 @@ const AdminPage = () => {
     return (
         <>
             <div>
-                <Button classes={'grey'}><NavLink to='dishes'>Dishes</NavLink></Button><br/>
-                <Button  classes={'grey'}><NavLink to='orders'>Orders</NavLink></Button>
+                <Button classes={'grey'}><NavLink to='/admin/dishes'>Dishes</NavLink></Button><br/>
+                <Button  classes={'grey'}><NavLink to='/admin/orders'>Orders</NavLink></Button>
             </div>
             <Dishes isAdmin/>
         </>
