@@ -3,21 +3,22 @@ import './Order.scss';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {selectOrders} from "../../store/orders/ordersSlice";
 import {fetchOrders} from "../../store/orders/ordersThunk";
+import CartItem from "../../components/CartDishes/CartItem";
 
 
 const Orders = () => {
-    const orders = useAppSelector(selectOrders);
+    const newAllOrders = useAppSelector(selectOrders);
     const dispatch = useAppDispatch();
-
+    console.log(newAllOrders)
     useEffect(() => {
         dispatch(fetchOrders());
-        console.log(orders)
     }, [])
 
     return (
-        <div>
-            
-        </div>
+        <>
+            <h4>Orders</h4>
+
+        </>
     );
 };
 

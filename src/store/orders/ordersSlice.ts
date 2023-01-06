@@ -1,15 +1,24 @@
-import {CartDish, Orders} from "../../types";
+import {AllOrders, ApiOrdersList, CartDish, Customer, Dish, Orders} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
 import {fetchOrders} from "./ordersThunk";
 import {RootState} from "../../app/store";
 
 interface OrdersState {
-    orders: Orders[];
-    fetchOrdersLoading: boolean
+    fetchOrdersLoading: boolean,
+    orders: AllOrders
+
 }
 const initialState: OrdersState = {
-    orders: [],
-    fetchOrdersLoading: false
+    fetchOrdersLoading: false,
+    orders: {
+        id: '',
+        customer: {
+            name: '',
+            address: '',
+            phone: ''
+        },
+        dishes: []
+    }
 }
 
 
@@ -21,9 +30,9 @@ export const ordersSlice = createSlice({
         builder.addCase(fetchOrders.pending, (state) => {
             state.fetchOrdersLoading = true;
         });
-        builder.addCase(fetchOrders.fulfilled, (state, {payload: orders}) => {
+        builder.addCase(fetchOrders.fulfilled, (state, {payload: order}) => {
             state.fetchOrdersLoading = false;
-            state.orders = orders;
+            state.orders = order;
         });
         builder.addCase(fetchOrders.rejected, (state) => {
             state.fetchOrdersLoading = false;

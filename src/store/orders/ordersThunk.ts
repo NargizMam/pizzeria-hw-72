@@ -1,28 +1,40 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ApiOrdersList, CartDish, Orders} from "../../types";
+import {AllOrders, ApiOrdersList} from "../../types";
 import axiosApi from "../../axiosApi";
-import {RootState} from "../../app/store";
+import {AppDispatch} from "../../app/store";
+import {fetchOneDish} from "../dishes/dishesThunk";
 
 
-export const fetchOrders = createAsyncThunk<CartDish[], undefined, { state: RootState }>(
+export const fetchOrders = createAsyncThunk<AllOrders, undefined, {dispatch: AppDispatch}>(
     'orders/fetch',
     async (_, thunkAPI) => {
+        let allOrders: AllOrders = {
+            id: '',
+            customer: {
+                name: '',
+                address: '',
+                phone: ''
+            },
+            dishes: [
+                {dishId: '',
+                amount: 0}
+                ]
+        };
         const response = await axiosApi.get<ApiOrdersList | null>('/orders.json');
         const orders = response.data;
-        let newOrders: Orders[] = [];
-        if (orders !== null) {
-            newOrders = Object.keys(orders).map(orderId => {
-                const order: Orders = orders[orderId];
-                const data = {
-                    id: orderId,
-                    dishes: order
-                };
-                Object.keys(orders).forEach(dishId => {
-                    const dish = thunkAPI.getState().dishes.items.find(dish => dish.id = dishId);
-                    console.log(dish)
-                })
-            })
+
+        if (orders) {
+           Object.keys(orders).map(orderId => {
+                allOrders.id = orderId;
+                allOrders.customer = orders[orderId].customer;
+                allOrders.dishes = orders[orderId].dishes;
+               orders[orderId].dishes.map(dishOrder => {
+                  thunkAPI.dispatch(fetchOneDish(dishOrder.dishId));
+               })
+            });
+
         }
-        return newOrders;
+        return allOrders;
+
     }
 );

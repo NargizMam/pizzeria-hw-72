@@ -25,7 +25,7 @@ const DishItem: React.FC<Props> = ({isAdmin, dish}) => {
     };
     const getOrder = () => {
         if(!isAdmin){
-            dispatch(addDish(dish));
+            dispatch(addDish(dish.id));
             dispatch(getTotalPrice(dish.price));
         }
     };
