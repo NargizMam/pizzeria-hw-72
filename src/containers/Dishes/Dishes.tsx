@@ -7,7 +7,7 @@ import {fetchDishes} from "../../store/dishes/dishesThunk";
 import './Dishes.scss';
 import Button from "../../UI/Button/Button";
 import DishItem from "../../components/DishItem/DishItem";
-import {selectTotalPrice} from "../../store/cartSlice";
+import {addDish, getTotalPrice, selectTotalPrice} from "../../store/cartSlice";
 import Spinner from "../../UI/Spinner/Spinner";
 
 interface Props{
@@ -24,7 +24,12 @@ const Dishes: React.FC<Props> = ({isAdmin}) => {
         dispatch(fetchDishes());
     }, [dispatch]);
 
-
+    const getOrder = async (id: string, price: number) => {
+        if(!isAdmin){
+          await dispatch(addDish(id));
+            dispatch(getTotalPrice(price));
+        }
+    };
     return (
         <>
         {dishesLoading ? <Spinner/> : null}
@@ -43,8 +48,9 @@ const Dishes: React.FC<Props> = ({isAdmin}) => {
                 {dishes.length > 0 ?
                     dishes.map(dish => (
                     <DishItem key={dish.id}
-                          dish={dish}
-                          isAdmin={isAdmin}
+                              dish={dish}
+                              isAdmin={isAdmin}
+                              clicked={() => getOrder(dish.id, dish.price)}
                     /> )) : <h4>Список блюд пуст!</h4>
                 }
                 {totalPrice > 0 &&
@@ -59,7 +65,8 @@ const Dishes: React.FC<Props> = ({isAdmin}) => {
                                     <strong>{totalPrice}</strong> KGS
                                 </div>
                                 <Button classes={'grey'}>
-                                    <NavLink to='/cart-dishes' style={{width: '100%'}}>Checkout</NavLink>
+                                    <NavLink to='/cart-dishes'
+                                             style={{width: '100%'}}>Checkout</NavLink>
                                 </Button>
                             </div>
                         </div>

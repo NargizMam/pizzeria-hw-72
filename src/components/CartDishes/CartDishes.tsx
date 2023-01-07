@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {addDish, getTotalPrice, resetCart, selectCartDishes, selectTotalPrice} from "../../store/cartSlice";
+import {getTotalPrice, resetCart, selectCartDishes, selectTotalPrice} from "../../store/cartSlice";
 import CartItem from "./CartItem";
 import Button from "../../UI/Button/Button";
 import {useNavigate} from "react-router-dom";
@@ -8,11 +8,14 @@ import CustomerForm from "../CustomerForm/CustomerForm";
 import {DELIVERY} from "../../delivery";
 
 const CartDishes = () => {
-    const cartDishes = useAppSelector(selectCartDishes);
-    const total = useAppSelector(selectTotalPrice);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const cartDishes = useAppSelector(selectCartDishes);
+    const total = useAppSelector(selectTotalPrice);
     const [show, setShow] = useState(false);
+
+
+
 
     const onCancel = async () => {
       await  dispatch(resetCart());
@@ -27,12 +30,12 @@ const CartDishes = () => {
     return (
         <>
             <h3>Your order!</h3>
-            {cartDishes.map(cartDish => (
-                <CartItem
-                    key={cartDish.dishId}
-                    cartDish={cartDish}
-                />
-            ))};
+            {cartDishes.map(cartDish =>
+            (<CartItem
+            key={cartDish.dishId}
+            cartDish={cartDish}
+             />
+            ))}
             <div className="card col-5 border-0 p-2">
                 <div className="row">
                     <div className="col text-right">
